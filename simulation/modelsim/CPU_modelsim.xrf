@@ -1,7 +1,7 @@
 vendor_name = ModelSim
-source_file = 1, C:/Users/sunji/Documents/ComputerArchitecture/RegFile.v
-source_file = 1, C:/Users/sunji/Documents/ComputerArchitecture/testbench.v
-source_file = 1, C:/Users/sunji/Documents/ComputerArchitecture/db/CPU.cbx.xml
+source_file = 1, C:/Users/sunji/Documents/CompArchRepo/CompArchCPU/RegFile.v
+source_file = 1, C:/Users/sunji/Documents/CompArchRepo/CompArchCPU/testbench.v
+source_file = 1, C:/Users/sunji/Documents/CompArchRepo/CompArchCPU/db/CPU.cbx.xml
 design_name = RegFile
 instance = comp, \~QUARTUS_CREATED_GND~I , ~QUARTUS_CREATED_GND~I, RegFile, 1
 instance = comp, \out1[0]~output , out1[0]~output, RegFile, 1
