@@ -1,0 +1,16 @@
+Analysis & Synthesis Status : Successful - Tue Feb 08 10:41:03 2022
+Quartus Prime Version : 18.0.0 Build 614 04/24/2018 SJ Lite Edition
+Revision Name : CPU
+Top-level Entity Name : RegFile
+Family : MAX 10
+Total logic elements : 2,413
+    Total combinational functions : 1,421
+    Dedicated logic registers : 1,088
+Total registers : 1088
+Total pins : 115
+Total virtual pins : 0
+Total memory bits : 0
+Embedded Multiplier 9-bit elements : 0
+Total PLLs : 0
+UFM blocks : 0
+ADC blocks : 0
