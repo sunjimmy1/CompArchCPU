@@ -1,52 +1,34 @@
-module testbench(output reg [4:0] rs1, 
-					 output reg [4:0] rs2, 
-					 output reg [4:0] rd,
-					 output reg [31:0] din, 
-					 output reg reset, 
-					 output reg enable, 
-					 output reg clk, 
-					 output [31:0] out1, 
-					 output [31:0] out2,
-					 output reg rw);
+module testbench(output reg clk,
+				output reg [31:0] in1,
+				output reg [31:0] in2, 
+				output reg [3:0] op, 
+				output wire [31:0] result,
+				output wire [4:0] status);
 
-	reg [5:0] counter;
-					 
-	RegFile testing (rs1, rs2, rd, din, out1, out2, clk, reset, enable, rw);
+				
+	ALU testing (clk, in1, in2, op, result, status);
 		
 	initial begin
-			enable <= 1;
-			rw <= 1;
-			clk <= 0;
-			reset <= 1;
-			#3
-			reset <= 0;
-			#3		
-			din <= 32'd37;
-			rd <= 5'd17;
-			#3
-			rw = 0;
-			rs1 <= 5'd17;
-			rs2 <= 5'd5;
-			for(counter = 1; counter < 5'd31; counter = counter + 2'd2)begin
-				#3
-				din <= 1 << counter;
-				rd <= counter;
-				rw <= 1;
-				#3
-				rw <= 0;
-				#3
-				din <= 32'd1073741824 >> counter;
-				rd <= counter + 1;
-				rw <= 1;
-				#3
-				rw = 0;
-				rs1 <= counter;
-				rs2 <= counter + 1;
-			end
-			#3
-			reset <= 1;
-			#3
-			reset <= 0;
+			clk <=0;
+			#5
+			in1 <= 32'b0101;
+			in2 <= 32'b0110;
+			op <= 4'b0001;
+			#5
+			in1 <= 32'b0101;
+			in2 <= 32'b0110;
+			op <= 4'b0010;
+			#5
+			in1 <= 32'b0101;
+			in2 <= 32'b0110;
+			op <= 4'b0011;
+			#5
+			in1 <= 32'b0111_0000_1111_0000_1111_0000_0101;
+			in2 <= 32'b0111_0000_1111_0000_1111_0000_0101;
+			op <= 4'b0100;
+			#5
+			in1 <= 32'b0;
+			in2 <= 32'b0;
 			$stop;
 		end
 		
