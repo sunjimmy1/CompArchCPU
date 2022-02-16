@@ -27,15 +27,15 @@ module testbench(output reg [4:0] rs1,
 			rw = 0;
 			rs1 <= 5'd17;
 			rs2 <= 5'd5;
-			for(counter = 1; counter < 5'd31; counter = counter + 2'd2)begin
+			for(counter = 0; counter < 5'd31; counter = counter + 2'd2)begin
 				#3
-				din <= 1 << counter;
+				din <= $urandom;
 				rd <= counter;
 				rw <= 1;
 				#3
 				rw <= 0;
 				#3
-				din <= 32'd1073741824 >> counter;
+				din <= $urandom;
 				rd <= counter + 1;
 				rw <= 1;
 				#3
