@@ -4,7 +4,7 @@ module ALU(clk,
 				op, 
 				result,
 				status);
-	output reg [4:0] status; // from LSB these are carry-out, negative, zero, parity (odd), overflow
+	output reg [4:0] status; // from LSB these are carry-out (0), negative (1), zero (2), parity (odd) (3), overflow (4)
 	output reg [31:0] result;
 	reg [32:0] temp;
 	input clk;
@@ -22,18 +22,26 @@ module ALU(clk,
 		case(op)
 			4'b0001 : begin //AND
 				result = in1 & in2;
-				status <= 5'b0;
+				status[0] <= 0;
+				status[1] <= result[31];
+				status[2] <= result == 0 ? 1'b1 : 1'b0;
 				status[3] <= parity(result);
+				status[4] <= 0;
 			end
 			4'b0010 : begin //OR
 				result = in1 | in2;
-				status <= 5'b0;
+				status[0] = 0;
+				status[1] <= result[31];
+				status[2] <= result == 0 ? 1'b1 : 1'b0;
 				status[3] <= parity(result);
+				status[4] <= 0;
 			end
 			4'b0011 : begin //XOR
 				result = in1 ^ in2;
-				status <= 5'b0;
+				status[1] <= result[31];
+				status[2] <= result == 0 ? 1'b1 : 1'b0;
 				status[3] <= parity(result);
+				status[4] <= 0;
 			end
 			4'b0100 : begin //ADD
 				result = in1 + in2;
