@@ -1,18 +1,26 @@
-module testbench(output reg [6:0] address, 
-						output reg en, 
-						output [31:0] out, 
-						output reg clk);
+module testbench(output reg [31:0] rd, 
+							output reg [31:0] din, 
+							output [31:0]out, 
+							output reg clk,
+							output reg rw);
 
-ROM testing(address, en, out, clk);
+RAM testing(rd, din, out, rw);
 integer i;
+
 initial begin
 	clk <= 0;
-	en <= 1;
-	#2
-	for(i = 7'b0; i < 7'b1111111; i = i + 1) begin
+	for(i = 7'b0; i <= 7'b1111111; i = i + 1) begin
 		#2
-		address <= i;
+		rw <= 1;
+		#2
+		rd <= i;
+		din <= $urandom;
+		#1
+		rw <= 0;
+		#3
+		rw <= 0;
 	end
+	rw <= 0;
 	$stop;	
 end
 

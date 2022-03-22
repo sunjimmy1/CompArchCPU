@@ -1,7 +1,7 @@
-module ROM(address, en, out, clk); 
+module ROM(address, en, out); 
 reg [31:0] storage [127:0]; 
 output reg [31:0] out; 
-input clk, en; 
+input en; 
 input [6:0] address; 
 integer i; 
 initial begin 
@@ -11,7 +11,7 @@ initial begin
 	end 
 end 
  
-always @(posedge clk) begin 
+always @(address or en) begin 
 	if(en) begin 
 		out <= storage[address]; 
 	end 
