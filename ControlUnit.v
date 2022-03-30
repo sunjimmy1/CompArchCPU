@@ -12,12 +12,14 @@ always@(*) begin
 			ImmSel <= 1'b0;
 			BSel <= 1'b0;
 			ASel <= 1'b0;
-			MemRW <= 1'bx;
+			MemRW <= 1'b0;
+			WBSel <= 1'b1;
+			BrUn <= 1'b0;
 			case(IWord[14:12])
 				3'h0 : begin
 					case(IWord[31:25])
 						 7'h0 : begin //Add
-							ALUOP <= 4'h1;
+							ALUOP <= 4'h4;
 						 end
 						 7'h20 : begin //Sub
 							ALUOP <= 4'h5;
@@ -60,10 +62,12 @@ always@(*) begin
 			ImmSel <= 1'b1;
 			BSel <= 1'b1;
 			ASel <= 1'b0;
-			MemRW <= 1'bx;
+			MemRW <= 1'b0;
+			WBSel <= 1'b1;
+			BrUn <= 1'b0;
 			case(IWord[14:12])
 					3'h0 : begin //Add
-							ALUOP <= 4'h1;
+							ALUOP <= 4'h4;
 					end
 					3'h1 : begin //Shift Left Logical
 						ALUOP <= 4'h7;
@@ -101,32 +105,39 @@ always@(*) begin
 			ImmSel <= 1'b1;
 			BSel <= 1'b1;
 			ASel <= 1'b0;
-			ALUOP <= 4'b1;
+			ALUOP <= 4'h4;
 			MemRW <= 0;
+			WBSel <= 0;
+			BrUn <= 1'b0;
 		end
-		7'b0100011 : begin
+		7'b0100011 : begin //Store Word
 			PCSelect <= 1'b0;
 			RegWEn <= 1'b1;
 			ImmSel <= 1'b1;
 			BSel <= 1'b1;
 			ASel <= 1'b0;
-			ALUOP <= 4'b1;
-			MemRW <= 1;
+			ALUOP <= 4'h4;
+			MemRW <= 1'b1;
+			WBSel <= 1'b1;
 		end
-		7'b1100011 : begin
+		7'b1100011 : begin //Branch
 			RegWEn <= 1'b1;
 			ImmSel <= 1'b1;
 			case(IWord[14:12]) 
 				3'h0 : begin
+					BrUn <= 1'b0;
 					PCSelect <= BEQ;
 				end
 				3'h1 : begin
+					BrUn <= 1'b0;
 					PCSelect <= ~BEQ;
 				end
 				3'h4 : begin
+					BrUn <= 1'b0;
 					PCSelect <= BLT;
 				end
 				3'h5 : begin
+					BrUn <= 1'b0;
 					PCSelect <= BEQ | ~BLT;
 				end
 				3'h6 : begin
@@ -140,8 +151,9 @@ always@(*) begin
 			endcase
 			BSel <= 1'b1;
 			ASel <= 1'b0;
-			ALUOP <= 4'b1;
-			MemRW <= 1;
+			ALUOP <= 4'h4;
+			MemRW <= 1'b0;
+			WBSel <= 1'b1;
 		end
 	endcase
 end
