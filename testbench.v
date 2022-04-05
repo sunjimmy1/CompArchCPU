@@ -1,67 +1,46 @@
-module testbench(output reg [31:0] IWord, 
-						output PCSelect, 
-						output RegWEn, 
-						output ImmSel, 
-						output BrUn, 
-						output BEQ, 
-						output BLT, 
-						output BSel, 
-						output ASel, 
-						output [3:0] ALUOP, 
-						output WBSel, 
-						output MemRW,
-						output reg clk);
-ControlUnit testing(IWord, PCSelect, RegWEn, ImmSel, BrUn, BEQ, BLT, BSel, ASel, ALUOP, WBSel, MemRW);
+module testbench();
 
+	reg clk;
+	reg reset;
+	wire [31:0] result,
+					longImm, 
+					IWord, 
+					data1Val, 
+					data2Val, 
+					alu1, 
+					alu2, 
+					PCVal,
+					WB;
+	wire [3:0] ALUOP;
+Datapath d(clk,
+				reset,
+				WB,
+				PCSelect, 
+				RegWEn, 
+				ImmSel, 
+				BrUn, 
+				BEQ, 
+				BLT, 
+				BSel, 
+				ASel, 
+				ALUOP, 
+				WBSel, 
+				MemRW, 
+				longImm, 
+				IWord, 
+				data1Val, 
+				data2Val, 
+				result,
+				alu1, 
+				alu2, 
+				PCVal);
 
 initial begin
+	reset <= 1;
+	#1
+	reset <= 0;
 	clk = 1'b0;
-	IWord = 32'b0000000_11111_01010_000_10010_0110011;//Add
-	#2
-	IWord = 32'b0100000_11111_01010_000_10010_0110011;//Sub
-	#2
-	IWord = 32'b0000000_11111_01010_001_10010_0110011;//SLL
-	#2
-	IWord = 32'b0000000_11111_01010_100_10010_0110011;//XOR
-	#2
-	IWord = 32'b0000000_11111_01010_101_10010_0110011;//SRL
-	#2
-	IWord = 32'b0100000_11111_01010_101_10010_0110011;//SRA
-	#2
-	IWord = 32'b0000000_11111_01010_110_10010_0110011;//OR
-	#2
-	IWord = 32'b0000000_11111_01010_111_10010_0110011;//AND
-	#4
-	IWord = 32'b000000011111_01010_000_10010_0010011;//ADDI
-	#2
-	IWord = 32'b000000011111_01010_000_10010_0010011;//XORI
-	#2
-	IWord = 32'b000000011111_01010_110_10010_0010011;//ORI
-	#2
-	IWord = 32'b000000011111_01010_111_10010_0010011;//ANDI
-	#2
-	IWord = 32'b000000011111_01010_001_10010_0010011;//SLLI
-	#2
-	IWord = 32'b000000011111_01010_101_10010_0010011;//SRLI
-	#2
-	IWord = 32'b010000011111_01010_101_10010_0010011;//SRAI
-	#4
-	IWord = 32'b101010101010_10101_010_01010_0000011;//LW
-	#2
-	IWord = 32'b101010101010_10101_010_01010_0100011;//SW
-	#4
-	IWord = 32'b0_000000_01010_10011_000_1000_0_1100011;//BEQ
-	#2
-	IWord = 32'b0_000000_01010_10011_001_1000_0_1100011;//BNE
-	#2
-	IWord = 32'b0_000000_01010_10011_100_1000_0_1100011;//BLT
-	#2
-	IWord = 32'b0_000000_01010_10011_101_1000_0_1100011;//BGE
-	#2
-	IWord = 32'b0_000000_01010_10011_10_1000_0_1100011;//BLTU
-	#2
-	IWord = 32'b0_000000_01010_10011_111_1000_0_1100011;//BGEU
-	#2
+	#8
 	$stop;	
 end
 

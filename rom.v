@@ -3,12 +3,11 @@ reg [31:0] storage [127:0];
 output reg [31:0] out; 
 input en; 
 input [6:0] address; 
-integer i; 
-initial begin 
-	//storage[7'd10] <= 31'b0000000_01111_01001_000_00001_0110011; 
-	for(i = 7'b0; i < 7'b1111111; i = i + 1) begin 
-		storage[i] <= i; 
-	end 
+
+initial begin
+	storage[4] = 32'b000000000000_01111_000_00111_0010011;//ADDI
+	storage[8] = 32'b000000000011_01001_000_00001_0010011;//ADDI
+	storage[12] = 32'b0100000_00111_00001_000_11111_0110011;//SUB
 end 
  
 always @(address or en) begin 

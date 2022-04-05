@@ -66,7 +66,7 @@ input en, rw;
 input [31:0] dataIn;
 output reg [31:0] out;
 
-always @(address or dataIn or rw) begin
+always @(address or dataIn or rw or en) begin
 
 	if(en) begin
 		if(rw) begin
