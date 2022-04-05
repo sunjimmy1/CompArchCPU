@@ -1,2 +1,2 @@
 # CompArchCPU
- A CPU for Computer Architecture
+ A RISV-32I CPU for Computer Architecture
