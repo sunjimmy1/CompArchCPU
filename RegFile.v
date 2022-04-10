@@ -15,14 +15,14 @@ reg rwHolder;
 		if (enable) begin
 			if(reset) begin
 				for( i = 0; i <= 31; i = i + 1 ) begin 
-					steve[i] <= 32'b0;	
+					steve[i] = 32'b0;	
 				end
 			end
 			else if(rw) begin
-				steve[rd] <= din; 
+				steve[rd] = din; 
 			end
-			out1 <= steve[rs1];
-			out2 <= steve[rs2];
+			out1 = steve[rs1];
+			out2 = steve[rs2];
 		end
 	end
 
