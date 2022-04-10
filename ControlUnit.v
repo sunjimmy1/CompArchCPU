@@ -3,6 +3,8 @@ input [31:0] IWord;
 input BEQ, BLT;
 output reg PCSelect, RegWEn, ImmSel, BSel, ASel, WBSel, MemRW, BrUn;
 output reg [3:0] ALUOP;
+
+
 always@(*) begin
 
 	case(IWord[6:0])
@@ -24,6 +26,8 @@ always@(*) begin
 						 7'h20 : begin //Sub
 							ALUOP <= 4'h5;
 						end
+						default:
+						;
 					endcase
 				end
 				3'h1 : begin //Shift Left Logical
@@ -46,6 +50,8 @@ always@(*) begin
 						7'h00:begin //SRL
 							ALUOP <= 4'h6;
 						end
+						default:
+						;
 					endcase
 				end
 				3'h6 : begin //Or
@@ -106,8 +112,8 @@ always@(*) begin
 			BSel <= 1'b1;
 			ASel <= 1'b0;
 			ALUOP <= 4'h4;
-			MemRW <= 0;
-			WBSel <= 0;
+			MemRW <= 1'b0;
+			WBSel <= 1'b0;
 			BrUn <= 1'b0;
 		end
 		7'b0100011 : begin //Store Word
@@ -148,13 +154,17 @@ always@(*) begin
 					BrUn <= 1'b1;
 					PCSelect <= BEQ | ~BLT;
 				end
+				default:
+				;
 			endcase
 			BSel <= 1'b1;
-			ASel <= 1'b0;
+			ASel <= 1'b1;
 			ALUOP <= 4'h4;
 			MemRW <= 1'b0;
 			WBSel <= 1'b1;
 		end
+		default:
+		;
 	endcase
 end
 

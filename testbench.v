@@ -12,6 +12,7 @@ module testbench();
 					PCVal,
 					WB;
 	wire [3:0] ALUOP;
+	wire [11:0] imm;
 Datapath d(clk,
 				reset,
 				WB,
@@ -33,14 +34,16 @@ Datapath d(clk,
 				result,
 				alu1, 
 				alu2, 
-				PCVal);
+				PCVal,
+				imm);
 
 initial begin
+	$display(4'b0111+4'b1100);
+	clk <= 1'b0;
 	reset <= 1;
 	#1
 	reset <= 0;
-	clk = 1'b0;
-	#8
+	#64
 	$stop;	
 end
 

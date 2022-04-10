@@ -51,6 +51,8 @@ output reg [31:0] out;
 				en[7] <= 1;
 				out <= outToMux[7];
 			end
+			default:
+			;
 	endcase
 		
 end
@@ -59,7 +61,7 @@ endmodule
 
 module Chip(address, dataIn, out, rw, en);
 
-reg [255:0] steve [31:0];
+reg [31:0] steve [255:0];
 
 input [23:0] address;
 input en, rw;
