@@ -48,7 +48,7 @@ module testbench();
 	end
 
 	always begin
-		#1
+		#2
 		clk <= ~clk;
 	end
 endmodule
