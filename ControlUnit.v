@@ -127,7 +127,7 @@ always@(*) begin
 			WBSel <= 1'b1;
 		end
 		7'b1100011 : begin //Branch
-			RegWEn <= 1'b1;
+			RegWEn <= 1'b0;
 			ImmSel <= 1'b1;
 			case(IWord[14:12]) 
 				3'h0 : begin

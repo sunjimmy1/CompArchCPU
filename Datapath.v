@@ -20,7 +20,10 @@ module Datapath(input clk,
 					output reg [31:0] alu1, 
 					output reg [31:0] alu2, 
 					output [31:0]PCVal, 
-					output reg [12:0] imm);
+					output reg [12:0] imm,
+					output reg [4:0] rs1,
+					output reg [4:0] rs2,
+					output reg [4:0] rd);
 					
 wire [4:0] status;
 ROM Imem(PCVal, 1'b1, IWord);
@@ -32,30 +35,33 @@ ImmExtend longBoi(imm, longImm);
 ALU alu(alu1, alu2, ALUOP, result, status);
 RAM ram(result, alu1, DmemOut, MemRW);
 
-always@(*) begin
-	if(ASel) begin
-		alu1 <= PCVal;
+	always@(*) begin
+		if(ASel) begin
+			alu1 <= PCVal;
+		end
+		else begin
+			alu1 <= data1Val;
+		end
+		if(BSel) begin
+			alu2 <= longImm;
+		end
+		else begin
+			alu2 <= data2Val;
+		end
+		if(WBSel) begin
+			WB <= result;
+		end
+		else begin
+			WB <= DmemOut;
+		end
+		if(IWord[6:0] == 7'b1100011)begin
+			imm <= {IWord[31:25], IWord[11:7]};
+		end
+		else begin
+			imm <= IWord[31:20];
+		end
+		rs1 <= IWord[19:15];
+		rs2 <= IWord[24:20];
+		rd <= IWord[11:7];
 	end
-	else begin
-		alu1 <= data1Val;
-	end
-	if(BSel) begin
-		alu2 <= longImm;
-	end
-	else begin
-		alu2 <= data2Val;
-	end
-	if(WBSel) begin
-		WB <= result;
-	end
-	else begin
-		WB <= DmemOut;
-	end
-	if(IWord[6:0] == 7'b1100011)begin
-		imm <= {IWord[31:25], IWord[11:7]};
-	end
-	else begin
-		imm <= IWord[31:20];
-	end
-end
 endmodule
