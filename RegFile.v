@@ -7,22 +7,24 @@ input [4:0] rd, rs1, rs2;
 input clk, reset, enable, rw;
 input [31:0] din;
 output reg [31:0] out1, out2;
-reg [31:0] dataHolder;
-reg [4:0] rdHolder;
-reg rwHolder;
 
-	always @(*) begin
+	always @(negedge clk) begin
 		if (enable) begin
 			if(reset) begin
 				for( i = 0; i <= 31; i = i + 1 ) begin 
-					steve[i] = 32'b0;	
+					steve[i] <= 32'b0;	
 				end
 			end
 			else if(rw) begin
-				steve[rd] = din; 
+				steve[rd] <= din; 
 			end
-			out1 = steve[rs1];
-			out2 = steve[rs2];
+		end
+	end
+	
+	always @(rs1 or rs2 or enable) begin
+		if(enable) begin
+			out1 <= steve[rs1];
+			out2 <= steve[rs2];
 		end
 	end
 
